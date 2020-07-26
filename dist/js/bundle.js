@@ -91,6 +91,8 @@
 "use strict";
 
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
@@ -99,9 +101,60 @@ var _reactDom = __webpack_require__(6);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
+var _TodoList = __webpack_require__(12);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-console.log('Hello World!');
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var TodoApp = function (_React$Component) {
+  _inherits(TodoApp, _React$Component);
+
+  function TodoApp() {
+    _classCallCheck(this, TodoApp);
+
+    return _possibleConstructorReturn(this, (TodoApp.__proto__ || Object.getPrototypeOf(TodoApp)).apply(this, arguments));
+  }
+
+  _createClass(TodoApp, [{
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(
+          'form',
+          { className: 'form' },
+          _react2.default.createElement(
+            'div',
+            { className: 'inputArea' },
+            _react2.default.createElement('input', { type: 'text', className: 'inputText js-get-val', value: '', placeholder: 'something todo task' }),
+            _react2.default.createElement(
+              'span',
+              { className: 'error js-toggle-error' },
+              '\u5165\u529B\u304C\u7A7A\u3067\u3059\u3088\uFF01\uFF01\uFF01'
+            )
+          )
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'searchBox' },
+          _react2.default.createElement('i', { className: 'far fa-search searchBox__icon', 'aria-hidden': 'true' }),
+          _react2.default.createElement('input', { type: 'text', className: 'searchBox__input js-search', value: '', placeholder: 'something keyword' })
+        ),
+        _react2.default.createElement(_TodoList.TodoList, null)
+      );
+    }
+  }]);
+
+  return TodoApp;
+}(_react2.default.Component);
+
+_reactDom2.default.render(_react2.default.createElement(TodoApp, null), document.getElementById('app'));
 
 /***/ }),
 /* 1 */
@@ -28561,6 +28614,13 @@ exports.unstable_unsubscribe = unstable_unsubscribe;
 exports.unstable_wrap = unstable_wrap;
   })();
 }
+
+
+/***/ }),
+/* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
 
 
 /***/ })
