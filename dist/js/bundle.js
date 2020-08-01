@@ -113,6 +113,10 @@ var _TodoCreater = __webpack_require__(18);
 
 var _TodoCreater2 = _interopRequireDefault(_TodoCreater);
 
+var _Search = __webpack_require__(19);
+
+var _Search2 = _interopRequireDefault(_Search);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -132,21 +136,36 @@ var TodoApp = function (_React$Component) {
     _this.state = {
       data: [{
         id: _this.createId(),
+        text: 'aaa'
+      }, {
+        id: _this.createId(),
+        text: 'aab'
+      }, {
+        id: _this.createId(),
+        text: 'as'
+      }, {
+        id: _this.createId(),
+        text: 'aaaaah'
+      }, {
+        id: _this.createId(),
         text: 'sample01'
       }, {
         id: _this.createId(),
-        text: 'あああ'
-      }]
+        text: 'asssss'
+      }],
+      searchText: ''
     };
     _this.callBackRemoveTask = _this.callBackRemoveTask.bind(_this);
     _this.callBackAddTask = _this.callBackAddTask.bind(_this);
+    _this.callBackSearch = _this.callBackSearch.bind(_this);
+    _this.fillterCollection = _this.fillterCollection.bind(_this);
 
     return _this;
   }
 
   _createClass(TodoApp, [{
     key: 'createId',
-    value: function createId(digits) {
+    value: function createId() {
       return Math.random().toString(36).slice(-16);
     }
   }, {
@@ -167,20 +186,29 @@ var TodoApp = function (_React$Component) {
       });
     }
   }, {
+    key: 'callBackSearch',
+    value: function callBackSearch(val) {
+      this.setState({
+        searchText: val
+      });
+    }
+  }, {
+    key: 'fillterCollection',
+    value: function fillterCollection(elm) {
+      var regexp = new RegExp('^' + this.state.searchText, 'i');
+      return elm.text.match(regexp);
+    }
+  }, {
     key: 'render',
     value: function render() {
 
+      var data = this.state.searchText ? this.state.data.filter(this.fillterCollection) : this.state.data;
       return _react2.default.createElement(
         'div',
         null,
         _react2.default.createElement(_TodoCreater2.default, { callBackAddTask: this.callBackAddTask }),
-        _react2.default.createElement(
-          'div',
-          { className: 'searchBox' },
-          _react2.default.createElement('i', { className: 'far fa-search searchBox__icon', 'aria-hidden': 'true' }),
-          _react2.default.createElement('input', { type: 'text', className: 'searchBox__input js-search', defaultValue: '', placeholder: 'something keyword' })
-        ),
-        _react2.default.createElement(_TodoList2.default, { data: this.state.data, callBackRemoveTask: this.callBackRemoveTask })
+        _react2.default.createElement(_Search2.default, { callBackSearch: this.callBackSearch }),
+        _react2.default.createElement(_TodoList2.default, { data: data, callBackRemoveTask: this.callBackRemoveTask })
       );
     }
   }]);
@@ -46206,6 +46234,71 @@ var TodoCreater = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = TodoCreater;
+
+/***/ }),
+/* 19 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Search = function (_React$Component) {
+  _inherits(Search, _React$Component);
+
+  function Search(props) {
+    _classCallCheck(this, Search);
+
+    var _this = _possibleConstructorReturn(this, (Search.__proto__ || Object.getPrototypeOf(Search)).call(this, props));
+
+    _this.state = {
+      val: ''
+    };
+    _this.handleChange = _this.handleChange.bind(_this);
+    return _this;
+  }
+
+  _createClass(Search, [{
+    key: 'handleChange',
+    value: function handleChange(e) {
+      this.setState({
+        val: e.target.value
+      });
+      this.props.callBackSearch(e.target.value);
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        { className: 'searchBox' },
+        _react2.default.createElement('i', { className: 'far fa-search searchBox__icon', 'aria-hidden': 'true' }),
+        _react2.default.createElement('input', { type: 'text', className: 'searchBox__input js-search', value: this.state.val, onChange: this.handleChange, placeholder: 'something keyword' })
+      );
+    }
+  }]);
+
+  return Search;
+}(_react2.default.Component);
+
+exports.default = Search;
 
 /***/ })
 /******/ ]);
