@@ -1,24 +1,60 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import TodoList from './components/TodoList'
+import _ from 'lodash';
+import TodoList from './components/TodoList';
+import TodoCreater from './components/TodoCreater';
 
 class TodoApp extends React.Component {
+
+  constructor(){
+    super();
+    this.state = {
+      data: [
+        {
+          id: this.createId(),
+          text: 'sample01'
+        },
+        {
+          id: this.createId(),
+          text: 'あああ'
+        }
+      ]
+    }
+    this.callBackRemoveTask = this.callBackRemoveTask.bind(this);
+    this.callBackAddTask = this.callBackAddTask.bind(this);
+    
+  }
+  createId(digits){
+    return Math.random().toString(36).slice(-16);
+  }
+
+  callBackRemoveTask(id){
+    let data = _.reject(this.state.data, {'id': id});
+    this.setState({
+      data: data
+    });
+  }
+
+  callBackAddTask(val){
+    let nextData = this.state.data;
+    nextData.push({id: this.createId(), text: val});
+    this.setState({
+      data: nextData
+    });
+  }
   render() {
+    
+
     return (
       <div>
-        <form className="form">
-          <div className="inputArea">
-            <input type="text" className="inputText js-get-val" defaultValue="" placeholder="something todo task" />
-            <span className="error js-toggle-error">入力が空ですよ！！！</span>
-          </div>
-        </form>
+        <TodoCreater  callBackAddTask={this.callBackAddTask}/>
 
         <div className="searchBox">
           <i className="far fa-search searchBox__icon" aria-hidden="true" />
           <input type="text" className="searchBox__input js-search" defaultValue="" placeholder="something keyword" />
         </div>
 
-        <TodoList />
+        <TodoList data={this.state.data} callBackRemoveTask={this.callBackRemoveTask}/>
 
       </div>
     );
